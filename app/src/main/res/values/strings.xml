@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Wowpapers</string>
+    <string name="wallpaper_list_empty">Wallpaper list empty</string>
+    <string name="wallpaper_list_load_fail">Failed loading wallpapers. Please check your internet connection.</string>
+
+    <string name="image_load_fail">Failed loading wallpaper image. Please check your internet connection.</string>
+    <string name="apply_wallpaper_button_text">Apply Wallpaper!</string>
+</resources>
