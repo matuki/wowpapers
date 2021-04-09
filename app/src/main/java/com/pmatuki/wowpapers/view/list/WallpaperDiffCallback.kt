@@ -1,4 +1,4 @@
-package com.pmatuki.wowpapers.view
+package com.pmatuki.wowpapers.view.list
 
 import androidx.recyclerview.widget.DiffUtil
 import com.pmatuki.wowpapers.view.model.Wallpaper

@@ -1,15 +1,12 @@
-package com.pmatuki.wowpapers
+package com.pmatuki.wowpapers.view.detail
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
+import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.databinding.ActivityDetailBinding
-import com.pmatuki.wowpapers.view.DetailViewModel
-import com.pmatuki.wowpapers.view.DetailViewState
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper
 
@@ -25,9 +22,14 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         intent.getParcelableExtra<Wallpaper>(PARAM_WALLPAPER_OBJ)?.let { wallpaper ->
             bindViewModel()
             viewModel.download(wallpaper.pathUrl.toString())
+        }
+
+        binding.applyButton.setOnClickListener {
+            viewModel.applyWallpaper(wallpaperDrawable)
         }
     }
 
@@ -47,7 +49,7 @@ class DetailActivity : AppCompatActivity() {
                         cardView.visibility = View.VISIBLE
                     }
                 }
-                is DetailViewState.Error -> {
+                is DetailViewState.ErrorLoading -> {
                     binding.apply {
                         this@DetailActivity.showToast(R.string.image_load_fail)
                         layoutViewLoading.visibility = View.GONE
@@ -58,9 +60,22 @@ class DetailActivity : AppCompatActivity() {
                     binding.apply {
                         layoutViewLoading.visibility = View.GONE
                         cardView.visibility = View.VISIBLE
+                        applyButton.isEnabled = true
                     }
                     wallpaperDrawable = state.imageDrawable
                     this@DetailActivity.binding.backgroundImage.setImageDrawable(wallpaperDrawable)
+                }
+                DetailViewState.Applying -> {
+                    binding.applyButton.isEnabled = false
+                    this@DetailActivity.showToast(R.string.applying_wallpaper_wait)
+                }
+                DetailViewState.Applied -> {
+                    binding.applyButton.isEnabled = true
+                    this@DetailActivity.showToast(R.string.applying_wallpaper_success)
+                }
+                is DetailViewState.ErrorApplying -> {
+                    binding.applyButton.isEnabled = true
+                    this@DetailActivity.showToast(R.string.applying_wallpaper_error)
                 }
             }
         })

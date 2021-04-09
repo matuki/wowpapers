@@ -8,7 +8,7 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ImageDownloadService  @Inject constructor() {
+class ImageDownloadService @Inject constructor() {
 
     suspend fun performDownload(url: String) : DownloadResult {
         return withContext(Dispatchers.IO) {

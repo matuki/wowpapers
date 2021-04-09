@@ -1,9 +1,8 @@
-package com.pmatuki.wowpapers.view
+package com.pmatuki.wowpapers.view.list
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pmatuki.wowpapers.R

@@ -1,19 +1,17 @@
-package com.pmatuki.wowpapers
+package com.pmatuki.wowpapers.view.list
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.pmatuki.wowpapers.view.detail.DetailActivity
+import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.databinding.ActivityMainBinding
-import com.pmatuki.wowpapers.view.WallpaperItemClickListener
-import com.pmatuki.wowpapers.view.WallpaperListState
-import com.pmatuki.wowpapers.view.WallpaperListViewModel
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper
 
-class MainActivity : AppCompatActivity(), WallpaperItemClickListener {
+class ListActivity : AppCompatActivity(), WallpaperItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -48,7 +46,7 @@ class MainActivity : AppCompatActivity(), WallpaperItemClickListener {
                 }
                 WallpaperListState.Error -> {
                     binding.apply {
-                        this@MainActivity.showToast(R.string.wallpaper_list_load_fail)
+                        this@ListActivity.showToast(R.string.wallpaper_list_load_fail)
                         layoutViewLoading.visibility = View.GONE
                         layoutViewEmpty.visibility = View.VISIBLE
                     }
@@ -58,7 +56,7 @@ class MainActivity : AppCompatActivity(), WallpaperItemClickListener {
                         layoutViewLoading.visibility = View.GONE
                         layoutViewEmpty.visibility = View.GONE
                     }
-                    this@MainActivity.binding.listView.updateList(state.list)
+                    this@ListActivity.binding.listView.updateList(state.list)
                 }
             }
         })

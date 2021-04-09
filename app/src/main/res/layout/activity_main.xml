@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".view.list.ListActivity">
 
     <FrameLayout
         android:id="@+id/layout_view_loading"
@@ -46,7 +46,7 @@
 
     </FrameLayout>
 
-    <com.pmatuki.wowpapers.view.WallpaperListView
+    <com.pmatuki.wowpapers.view.list.WallpaperListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
