@@ -1,4 +1,4 @@
-package com.pmatuki.wowpapers.view
+package com.pmatuki.wowpapers.view.list
 
 import android.content.Context
 import android.util.AttributeSet

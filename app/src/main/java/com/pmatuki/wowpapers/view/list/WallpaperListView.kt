@@ -1,4 +1,4 @@
-package com.pmatuki.wowpapers.view
+package com.pmatuki.wowpapers.view.list
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,7 +7,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pmatuki.wowpapers.databinding.WallpaperListBinding
 import com.pmatuki.wowpapers.view.model.Wallpaper
-import java.net.URL
 
 class WallpaperListView @JvmOverloads constructor(
     context: Context,

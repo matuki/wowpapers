@@ -49,11 +49,12 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/applyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/component_margin_default"
         android:layout_marginEnd="@dimen/component_margin_default"
+        android:enabled="false"
         android:text="@string/apply_wallpaper_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

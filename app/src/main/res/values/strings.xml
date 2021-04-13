@@ -5,4 +5,8 @@
 
     <string name="image_load_fail">Failed loading wallpaper image. Please check your internet connection.</string>
     <string name="apply_wallpaper_button_text">Apply Wallpaper!</string>
+
+    <string name="applying_wallpaper_wait">Applying wallpaper…</string>
+    <string name="applying_wallpaper_success">Wallpaper set!</string>
+    <string name="applying_wallpaper_error">Error setting wallpaper</string>
 </resources>
