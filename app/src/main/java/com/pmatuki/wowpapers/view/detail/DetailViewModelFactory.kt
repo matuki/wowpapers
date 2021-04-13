@@ -4,12 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.pmatuki.wowpapers.core.WallpaperService
 import com.pmatuki.wowpapers.remote.download.ImageDownloadService
+import com.pmatuki.wowpapers.view.di.DetailViewModelScope
+import javax.inject.Inject
 
-class DetailViewModelFactory(
-    private val imageDownloadService: ImageDownloadService,
-    private val wallpaperService: WallpaperService
-) : ViewModelProvider.Factory {
+class DetailViewModelFactory() : ViewModelProvider.Factory {
+
+    @Inject
+    lateinit var imageDownloadService: ImageDownloadService
+
+    @Inject
+    lateinit var wallpaperService: WallpaperService
+
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        DetailViewModelScope.scope.inject(this)
         return DetailViewModel(imageDownloadService, wallpaperService) as T
     }
 }

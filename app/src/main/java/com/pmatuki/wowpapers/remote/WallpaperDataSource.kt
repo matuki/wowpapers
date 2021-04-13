@@ -1,8 +1,10 @@
 package com.pmatuki.wowpapers.remote
 
 import com.pmatuki.wowpapers.remote.api.WallhavenService
+import toothpick.InjectConstructor
 
-class WallpaperDataSource(private val wallhavenService: WallhavenService) {
+@InjectConstructor
+class WallpaperDataSource(val wallhavenService: WallhavenService) {
 
     suspend fun getWallpapers() = wallhavenService.wallApi.searchWallpapers(
         "abstract",

@@ -4,9 +4,11 @@ import android.content.Context
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import toothpick.InjectConstructor
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+@InjectConstructor
 class ImageDownloadService(private val context: Context) {
 
     suspend fun performDownload(url: String) : DownloadResult {
