@@ -1,14 +1,17 @@
 package com.pmatuki.wowpapers.view.list
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.pmatuki.wowpapers.view.detail.DetailActivity
 import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.databinding.ActivityMainBinding
+import com.pmatuki.wowpapers.remote.WallpaperDataSource
+import com.pmatuki.wowpapers.remote.api.WallhavenService
+import com.pmatuki.wowpapers.view.detail.DetailActivity
 import com.pmatuki.wowpapers.view.extension.showToast
+import com.pmatuki.wowpapers.view.mapper.WallpaperMapper
 import com.pmatuki.wowpapers.view.model.Wallpaper
 
 class ListActivity : AppCompatActivity(), WallpaperItemClickListener {
@@ -16,6 +19,7 @@ class ListActivity : AppCompatActivity(), WallpaperItemClickListener {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var viewModel: WallpaperListViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,12 @@ class ListActivity : AppCompatActivity(), WallpaperItemClickListener {
     }
 
     private fun bindViewModel() {
-        viewModel = ViewModelProvider(this).get(WallpaperListViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this, WallpaperListViewModelFactory(
+                WallpaperDataSource(WallhavenService()), WallpaperMapper()
+            )
+        ).get(WallpaperListViewModel::class.java)
+
         viewModel.state.observe(this, { state ->
             when (state) {
                 WallpaperListState.Loading -> {

@@ -9,28 +9,18 @@ import com.pmatuki.wowpapers.core.WallpaperApplyResult
 import com.pmatuki.wowpapers.core.WallpaperService
 import com.pmatuki.wowpapers.remote.download.DownloadResult
 import com.pmatuki.wowpapers.remote.download.ImageDownloadService
-import com.pmatuki.wowpapers.view.di.ViewScope
 import kotlinx.coroutines.launch
-import toothpick.Toothpick
-import javax.inject.Inject
 
-internal class DetailViewModel : ViewModel() {
-
-    @Inject
-    lateinit var imageDownloadService: ImageDownloadService
-
-    @Inject
-    lateinit var wallpaperService: WallpaperService
+internal class DetailViewModel(
+    private val imageDownloadService: ImageDownloadService,
+    private val wallpaperService: WallpaperService
+) : ViewModel() {
 
     private val _state: MutableLiveData<DetailViewState> =
         MutableLiveData(DetailViewState.Loading)
 
     val state: LiveData<DetailViewState>
         get() = _state
-
-    init {
-        Toothpick.inject(this, ViewScope.scope)
-    }
 
     fun download(imageUrl: String) {
         viewModelScope.launch {

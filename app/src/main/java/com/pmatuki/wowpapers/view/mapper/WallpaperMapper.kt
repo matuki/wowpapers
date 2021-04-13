@@ -5,7 +5,7 @@ import javax.inject.Inject
 import com.pmatuki.wowpapers.view.model.Wallpaper as ViewWallpaper
 import com.pmatuki.wowpapers.remote.model.Wallpaper as RemoteWallpaper
 
-class WallpaperMapper @Inject constructor() {
+class WallpaperMapper {
 
     fun toView(wallpaper: RemoteWallpaper): ViewWallpaper =
         ViewWallpaper(
