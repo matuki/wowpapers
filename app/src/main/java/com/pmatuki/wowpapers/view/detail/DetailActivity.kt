@@ -6,9 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.pmatuki.wowpapers.R
-import com.pmatuki.wowpapers.core.WallpaperService
 import com.pmatuki.wowpapers.databinding.ActivityDetailBinding
-import com.pmatuki.wowpapers.remote.download.ImageDownloadService
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper
 
@@ -37,9 +35,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun bindViewModel() {
         viewModel = ViewModelProvider(
-            this, DetailViewModelFactory(
-                ImageDownloadService(applicationContext), WallpaperService(applicationContext)
-            )
+            this, DetailViewModelFactory()
         ).get(DetailViewModel::class.java)
 
         viewModel.state.observe(this, { state ->

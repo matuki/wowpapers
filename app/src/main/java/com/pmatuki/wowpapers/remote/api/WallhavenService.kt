@@ -5,8 +5,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import toothpick.InjectConstructor
 import javax.inject.Inject
 
+@InjectConstructor
 class WallhavenService {
 
     val wallApi: WallhavenApi

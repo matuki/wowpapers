@@ -6,8 +6,10 @@ import android.graphics.drawable.Drawable
 import androidx.core.graphics.drawable.toBitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import toothpick.InjectConstructor
 import java.io.IOException
 
+@InjectConstructor
 class WallpaperService(private val context: Context) {
 
     suspend fun applyWallpaper(imgDrawable: Drawable) : WallpaperApplyResult =
