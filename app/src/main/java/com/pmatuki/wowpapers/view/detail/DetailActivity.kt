@@ -34,9 +34,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun bindViewModel() {
-        viewModel = ViewModelProvider(
-            this, DetailViewModelFactory()
-        ).get(DetailViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
         viewModel.state.observe(this, { state ->
             when (state) {
