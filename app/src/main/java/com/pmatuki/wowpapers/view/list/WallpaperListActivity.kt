@@ -8,10 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.databinding.ActivityMainBinding
 import com.pmatuki.wowpapers.view.detail.DetailActivity
+import com.pmatuki.wowpapers.view.detail.DetailViewModel
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper
 
-class ListActivity : AppCompatActivity(), WallpaperItemClickListener {
+class WallpaperListActivity : AppCompatActivity(), WallpaperItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -30,10 +31,7 @@ class ListActivity : AppCompatActivity(), WallpaperItemClickListener {
     }
 
     private fun bindViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            WallpaperListViewModelFactory()
-        ).get(WallpaperListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(WallpaperListViewModel::class.java)
 
         viewModel.state.observe(this, { state ->
             when (state) {
@@ -51,7 +49,7 @@ class ListActivity : AppCompatActivity(), WallpaperItemClickListener {
                 }
                 WallpaperListState.Error -> {
                     binding.apply {
-                        this@ListActivity.showToast(R.string.wallpaper_list_load_fail)
+                        this@WallpaperListActivity.showToast(R.string.wallpaper_list_load_fail)
                         layoutViewLoading.visibility = View.GONE
                         layoutViewEmpty.visibility = View.VISIBLE
                     }
@@ -61,7 +59,7 @@ class ListActivity : AppCompatActivity(), WallpaperItemClickListener {
                         layoutViewLoading.visibility = View.GONE
                         layoutViewEmpty.visibility = View.GONE
                     }
-                    this@ListActivity.binding.listView.updateList(state.list)
+                    this@WallpaperListActivity.binding.listView.updateList(state.list)
                 }
             }
         })

@@ -9,18 +9,27 @@ import com.pmatuki.wowpapers.core.WallpaperApplyResult
 import com.pmatuki.wowpapers.core.WallpaperService
 import com.pmatuki.wowpapers.remote.download.DownloadResult
 import com.pmatuki.wowpapers.remote.download.ImageDownloadService
+import com.pmatuki.wowpapers.view.di.DetailViewModelScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class DetailViewModel(
-    private val imageDownloadService: ImageDownloadService,
-    private val wallpaperService: WallpaperService
-) : ViewModel() {
+internal class DetailViewModel() : ViewModel() {
+
+    @Inject
+    lateinit var imageDownloadService: ImageDownloadService
+
+    @Inject
+    lateinit var wallpaperService: WallpaperService
 
     private val _state: MutableLiveData<DetailViewState> =
         MutableLiveData(DetailViewState.Loading)
 
     val state: LiveData<DetailViewState>
         get() = _state
+
+    init {
+        DetailViewModelScope.scope.inject(this)
+    }
 
     fun download(imageUrl: String) {
         viewModelScope.launch {

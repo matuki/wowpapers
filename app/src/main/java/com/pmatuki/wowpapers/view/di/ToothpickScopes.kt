@@ -2,6 +2,7 @@ package com.pmatuki.wowpapers.view.di
 
 import com.pmatuki.wowpapers.WowpaperApplication
 import com.pmatuki.wowpapers.core.WallpaperService
+import com.pmatuki.wowpapers.di.AppScope
 import com.pmatuki.wowpapers.remote.WallpaperDataSource
 import com.pmatuki.wowpapers.remote.download.ImageDownloadService
 import com.pmatuki.wowpapers.view.mapper.WallpaperMapper
@@ -12,7 +13,7 @@ import toothpick.ktp.binding.bind
 
 object WallpaperListViewModelScope {
     val scope: Scope =
-        KTP.openScope(WowpaperApplication.APP_SCOPE)
+        KTP.openScope(AppScope.APP_SCOPE)
             .openSubScope(WallpaperListViewModelScope)
             .installModules(WallpaperListViewModule)
 }
@@ -25,7 +26,7 @@ object WallpaperListViewModule : Module() {
 }
 
 object DetailViewModelScope {
-    val scope: Scope = KTP.openScope(WowpaperApplication.APP_SCOPE)
+    val scope: Scope = KTP.openScope(AppScope.APP_SCOPE)
         .openSubScope(DetailViewModelScope)
         .installModules(DetailViewModelModule)
 }

@@ -17,6 +17,6 @@ class DetailViewModelFactory() : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         DetailViewModelScope.scope.inject(this)
-        return DetailViewModel(imageDownloadService, wallpaperService) as T
+        return DetailViewModel() as T
     }
 }
