@@ -7,10 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pmatuki.wowpapers.core.WallpaperApplyResult
 import com.pmatuki.wowpapers.core.WallpaperService
-import com.pmatuki.wowpapers.core.WallpaperServiceImpl
 import com.pmatuki.wowpapers.remote.download.DownloadResult
 import com.pmatuki.wowpapers.remote.download.ImageDownloadService
-import com.pmatuki.wowpapers.remote.download.ImageDownloadServiceImpl
 import com.pmatuki.wowpapers.view.di.DetailViewModelScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
