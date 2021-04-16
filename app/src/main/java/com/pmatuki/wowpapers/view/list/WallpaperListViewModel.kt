@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pmatuki.wowpapers.remote.WallpaperDataSource
-import com.pmatuki.wowpapers.view.di.DetailViewModelScope
+import com.pmatuki.wowpapers.remote.api.WallpaperDataSourceImpl
 import com.pmatuki.wowpapers.view.di.WallpaperListViewModelScope
 import com.pmatuki.wowpapers.view.mapper.WallpaperMapper
 import kotlinx.coroutines.launch
@@ -16,7 +15,7 @@ import javax.inject.Inject
 internal class WallpaperListViewModel() : ViewModel() {
 
     @Inject
-    lateinit var wallpaperDataSource: WallpaperDataSource
+    lateinit var wallpaperDataSource: WallpaperDataSourceImpl
 
     @Inject
     lateinit var wallpaperMapper: WallpaperMapper
