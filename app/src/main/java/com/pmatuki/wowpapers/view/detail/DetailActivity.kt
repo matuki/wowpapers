@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.pmatuki.wowpapers.R
+import com.pmatuki.wowpapers.data.WallpaperItemHolder
 import com.pmatuki.wowpapers.databinding.ActivityDetailBinding
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper
@@ -29,7 +30,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         binding.applyButton.setOnClickListener {
-            viewModel.applyWallpaper(wallpaperDrawable)
+            viewModel.apply(wallpaperDrawable)
         }
     }
 
@@ -63,8 +64,10 @@ class DetailActivity : AppCompatActivity() {
                         cardView.visibility = View.VISIBLE
                         applyButton.isEnabled = true
                     }
-                    wallpaperDrawable = state.imageDrawable
-                    this@DetailActivity.binding.backgroundImage.setImageDrawable(wallpaperDrawable)
+                    if (state.drawableHolder.item is Drawable) {
+                        wallpaperDrawable = state.drawableHolder.item as Drawable
+                        this@DetailActivity.binding.backgroundImage.setImageDrawable(wallpaperDrawable)
+                    }
                 }
                 DetailViewState.Applying -> {
                     binding.applyButton.isEnabled = false

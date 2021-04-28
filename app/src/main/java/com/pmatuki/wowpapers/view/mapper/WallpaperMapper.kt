@@ -2,9 +2,8 @@ package com.pmatuki.wowpapers.view.mapper
 
 import toothpick.InjectConstructor
 import java.net.URL
-import javax.inject.Inject
 import com.pmatuki.wowpapers.view.model.Wallpaper as ViewWallpaper
-import com.pmatuki.wowpapers.remote.model.Wallpaper as RemoteWallpaper
+import com.pmatuki.wowpapers.domain.Wallpaper as RemoteWallpaper
 
 @InjectConstructor
 class WallpaperMapper {

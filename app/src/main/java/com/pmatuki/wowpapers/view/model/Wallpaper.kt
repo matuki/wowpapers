@@ -2,7 +2,6 @@ package com.pmatuki.wowpapers.view.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
 import java.net.URL
 
 @Parcelize

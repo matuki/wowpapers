@@ -1,2 +1,6 @@
+include ':testmodule'
+include ':domain'
+include ':usecases'
+include ':data'
 include ':app'
 rootProject.name = "Wowpapers"
