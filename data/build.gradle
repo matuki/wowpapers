@@ -1,0 +1,31 @@
+apply plugin: 'java-library'
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation project(':domain')
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
+dependencies {
+    implementation project(':domain')
+
+    // Retrofit
+    implementation RetrofitDeps.retrofit
+    implementation RetrofitDeps.gson
+
+    // Todo: check why newer 4.9.0 version of okhttp doesn't work.
+    implementation 'com.squareup.okhttp3:okhttp:3.12.10'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.10'
+
+    // Glide
+    implementation GlideDeps.glide
+    annotationProcessor GlideDeps.glideAnnotation
+
+    // Toothpick and KTP
+    implementation ToothpickDeps.ktp
+    kapt ToothpickDeps.compiler
+    implementation ToothpickDeps.smoothie
+}

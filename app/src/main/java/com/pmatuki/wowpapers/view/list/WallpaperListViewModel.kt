@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pmatuki.wowpapers.remote.api.WallpaperDataSource
+import com.pmatuki.wowpapers.usecases.GetWallpapers
 import com.pmatuki.wowpapers.view.di.WallpaperListViewModelScope
 import com.pmatuki.wowpapers.view.mapper.WallpaperMapper
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 internal class WallpaperListViewModel() : ViewModel() {
 
     @Inject
-    lateinit var wallpaperDataSource: WallpaperDataSource
+    lateinit var getWallpapers: GetWallpapers
 
     @Inject
     lateinit var wallpaperMapper: WallpaperMapper
@@ -32,12 +32,11 @@ internal class WallpaperListViewModel() : ViewModel() {
 
     fun loadWallpapers() = viewModelScope.launch {
         try {
-            val wallpaperListResponse = wallpaperDataSource.getWallpapers()
+            val wallpaperList = getWallpapers()
             Log.v(
                 "Retrofit",
-                "API wallpaperDataSource.getWallpapers() returned: $wallpaperListResponse"
+                "API wallpaperDataSource.getWallpapers() returned: $wallpaperList"
             )
-            val wallpaperList = wallpaperListResponse.wallpaperList
 
             if (wallpaperList.isNotEmpty()) {
                 val mappedItems = wallpaperList.map { item -> wallpaperMapper.toView(item) }
