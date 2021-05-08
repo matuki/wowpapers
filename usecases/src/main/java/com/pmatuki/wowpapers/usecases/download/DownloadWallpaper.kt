@@ -1,7 +1,5 @@
-package com.pmatuki.wowpapers.usecases
+package com.pmatuki.wowpapers.usecases.download
 
-import com.pmatuki.wowpapers.data.download.DownloadResult
-import com.pmatuki.wowpapers.data.download.WallpaperDownloader
 import toothpick.InjectConstructor
 
 @InjectConstructor

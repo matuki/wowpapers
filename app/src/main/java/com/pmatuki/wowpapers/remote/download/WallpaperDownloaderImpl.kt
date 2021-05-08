@@ -3,9 +3,9 @@ package com.pmatuki.wowpapers.remote.download
 import android.content.Context
 import android.graphics.drawable.Drawable
 import com.bumptech.glide.Glide
-import com.pmatuki.wowpapers.data.download.DownloadResult
-import com.pmatuki.wowpapers.data.WallpaperItemHolder
-import com.pmatuki.wowpapers.data.download.WallpaperDownloader
+import com.pmatuki.wowpapers.usecases.download.DownloadResult
+import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
+import com.pmatuki.wowpapers.usecases.download.WallpaperDownloader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import toothpick.InjectConstructor

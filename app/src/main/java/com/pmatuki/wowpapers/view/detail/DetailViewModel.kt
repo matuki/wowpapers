@@ -6,11 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pmatuki.wowpapers.data.download.DownloadResult
-import com.pmatuki.wowpapers.data.core.WallpaperApplyResult
-import com.pmatuki.wowpapers.data.WallpaperItemHolder
-import com.pmatuki.wowpapers.usecases.ApplyWallpaper
-import com.pmatuki.wowpapers.usecases.DownloadWallpaper
+import com.pmatuki.wowpapers.usecases.download.DownloadResult
+import com.pmatuki.wowpapers.usecases.apply.WallpaperApplyResult
+import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
+import com.pmatuki.wowpapers.usecases.apply.ApplyWallpaper
+import com.pmatuki.wowpapers.usecases.download.DownloadWallpaper
 import com.pmatuki.wowpapers.view.di.DetailViewModelScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject

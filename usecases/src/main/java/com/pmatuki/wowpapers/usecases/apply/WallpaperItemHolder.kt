@@ -1,4 +1,4 @@
-package com.pmatuki.wowpapers.data
+package com.pmatuki.wowpapers.usecases.apply
 
 interface WallpaperItemHolder<E> {
     val item: E

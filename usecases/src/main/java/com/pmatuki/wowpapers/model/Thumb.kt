@@ -1,4 +1,4 @@
-package com.pmatuki.wowpapers.domain
+package com.pmatuki.wowpapers.model
 
 data class Thumb(
     var large: String,

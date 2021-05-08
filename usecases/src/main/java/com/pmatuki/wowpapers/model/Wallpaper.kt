@@ -1,4 +1,4 @@
-package com.pmatuki.wowpapers.domain
+package com.pmatuki.wowpapers.model
 
 data class Wallpaper(
     var id: String,

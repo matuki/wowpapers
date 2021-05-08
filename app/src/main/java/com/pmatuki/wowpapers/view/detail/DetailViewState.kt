@@ -1,7 +1,6 @@
 package com.pmatuki.wowpapers.view.detail
 
-import android.graphics.drawable.Drawable
-import com.pmatuki.wowpapers.data.WallpaperItemHolder
+import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
 
 internal sealed class DetailViewState {
 

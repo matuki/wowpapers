@@ -6,7 +6,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.pmatuki.wowpapers.R
-import com.pmatuki.wowpapers.data.WallpaperItemHolder
 import com.pmatuki.wowpapers.databinding.ActivityDetailBinding
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper

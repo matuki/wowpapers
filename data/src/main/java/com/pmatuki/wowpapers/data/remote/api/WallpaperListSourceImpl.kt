@@ -1,8 +1,7 @@
 package com.pmatuki.wowpapers.data.remote.api
 
 import com.pmatuki.wowpapers.data.remote.WallpaperListSource
-import com.pmatuki.wowpapers.data.remote.api.WallhavenService
-import com.pmatuki.wowpapers.domain.Wallpaper
+import com.pmatuki.wowpapers.model.Wallpaper
 import toothpick.InjectConstructor
 
 @InjectConstructor

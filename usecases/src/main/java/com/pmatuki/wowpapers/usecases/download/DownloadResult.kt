@@ -1,6 +1,6 @@
-package com.pmatuki.wowpapers.data.download
+package com.pmatuki.wowpapers.usecases.download
 
-import com.pmatuki.wowpapers.data.WallpaperItemHolder
+import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
 
 sealed class DownloadResult {
 

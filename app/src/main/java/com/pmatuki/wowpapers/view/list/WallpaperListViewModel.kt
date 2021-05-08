@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pmatuki.wowpapers.usecases.GetWallpapers
+import com.pmatuki.wowpapers.usecases.get.GetWallpapers
 import com.pmatuki.wowpapers.view.di.WallpaperListViewModelScope
 import com.pmatuki.wowpapers.view.mapper.WallpaperMapper
 import kotlinx.coroutines.launch

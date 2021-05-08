@@ -6,7 +6,6 @@ apply from: 'https://raw.githubusercontent.com/JakeWharton/SdkSearch/master/grad
 
 dependencies {
     implementation project(':data')
-    implementation project(':domain')
     implementation project(':usecases')
 
     kapt DataBindingDeps.compiler
