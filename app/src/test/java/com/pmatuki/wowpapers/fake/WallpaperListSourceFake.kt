@@ -3,12 +3,18 @@ package com.pmatuki.wowpapers.fake
 import com.pmatuki.wowpapers.data.remote.WallpaperListSource
 import com.pmatuki.wowpapers.model.Thumb
 import com.pmatuki.wowpapers.model.Wallpaper
+import java.io.IOException
 
 class WallpaperListSourceFake(val wallpaperCount: Int) : WallpaperListSource {
 
-    override suspend fun getWallpaperList(): List<Wallpaper> {
-        return getFakeWallpaperList(wallpaperCount)
-    }
+    private var state : FakeState = FakeState.Normal
+
+    override suspend fun getWallpaperList(): List<Wallpaper> =
+        when (state) {
+            FakeState.Normal -> getFakeWallpaperList(wallpaperCount)
+            FakeState.ReturnEmpty -> listOf()
+            FakeState.ThrowError -> throw IOException()
+        }
 
     private fun getFakeWallpaperList(count: Int): List<Wallpaper> {
         val fakeWallpaperList = mutableListOf<Wallpaper>()
@@ -32,6 +38,13 @@ class WallpaperListSourceFake(val wallpaperCount: Int) : WallpaperListSource {
         )
     }
 
+    fun throwError() {
+        state = FakeState.ThrowError
+    }
+
+    fun returnEmpty() {
+        state = FakeState.ReturnEmpty
+    }
 }
 
 
