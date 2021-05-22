@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.databinding.ActivityMainBinding
 import com.pmatuki.wowpapers.view.detail.DetailActivity
-import com.pmatuki.wowpapers.view.detail.DetailViewModel
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper
 

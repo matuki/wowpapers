@@ -1,6 +1,4 @@
-package com.pmatuki.wowpapers.data.core
-
-import com.pmatuki.wowpapers.data.WallpaperItemHolder
+package com.pmatuki.wowpapers.usecases.apply
 
 interface WallpaperApplier<E> {
 

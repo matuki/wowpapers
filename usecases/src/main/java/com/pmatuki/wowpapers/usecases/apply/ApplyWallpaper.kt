@@ -1,8 +1,5 @@
-package com.pmatuki.wowpapers.usecases
+package com.pmatuki.wowpapers.usecases.apply
 
-import com.pmatuki.wowpapers.data.WallpaperItemHolder
-import com.pmatuki.wowpapers.data.core.WallpaperApplier
-import com.pmatuki.wowpapers.data.core.WallpaperApplyResult
 import toothpick.InjectConstructor
 
 @InjectConstructor

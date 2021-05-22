@@ -1,4 +1,4 @@
-package com.pmatuki.wowpapers.data.core
+package com.pmatuki.wowpapers.usecases.apply
 
 sealed class WallpaperApplyResult {
 

@@ -4,9 +4,9 @@ import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.graphics.drawable.toBitmap
-import com.pmatuki.wowpapers.data.core.WallpaperApplier
-import com.pmatuki.wowpapers.data.core.WallpaperApplyResult
-import com.pmatuki.wowpapers.data.WallpaperItemHolder
+import com.pmatuki.wowpapers.usecases.apply.WallpaperApplier
+import com.pmatuki.wowpapers.usecases.apply.WallpaperApplyResult
+import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import toothpick.InjectConstructor
