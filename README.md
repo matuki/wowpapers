@@ -10,6 +10,7 @@ List of libs and frameworks used so far:
 - Coroutines (Async)
 - Room DB
 - Retrofit
+- Glide
 
 Architecture Practices and Patterns the project aims to follow:
 
