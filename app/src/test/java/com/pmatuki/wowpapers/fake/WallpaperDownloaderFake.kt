@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 
 class WallpaperDownloaderFake : WallpaperDownloader {
 
-    private var state: FakeState = FakeState.Normal
+    var state: FakeState = FakeState.Normal
 
     @ExperimentalCoroutinesApi
     override suspend fun performDownload(url: String): DownloadResult {
@@ -30,9 +30,5 @@ class WallpaperDownloaderFake : WallpaperDownloader {
                 DownloadResult.Error("Unexpected error")
             }
         }
-    }
-
-    fun doError() {
-        state = FakeState.ThrowError
     }
 }

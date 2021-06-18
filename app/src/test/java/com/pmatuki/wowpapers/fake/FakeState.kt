@@ -1,6 +1,6 @@
 package com.pmatuki.wowpapers.fake
 
-internal sealed class FakeState {
+sealed class FakeState {
 
     object Normal: FakeState()
 
