@@ -1,5 +1,4 @@
 import org.gradle.api.JavaVersion
-import sun.font.GlyphList
 
 object Releases {
     const val versionCode = 10000
