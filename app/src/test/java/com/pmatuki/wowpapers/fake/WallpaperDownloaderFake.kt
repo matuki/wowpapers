@@ -3,11 +3,8 @@ package com.pmatuki.wowpapers.fake
 import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
 import com.pmatuki.wowpapers.usecases.download.DownloadResult
 import com.pmatuki.wowpapers.usecases.download.WallpaperDownloader
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.withContext
 
 class WallpaperDownloaderFake : WallpaperDownloader {
 
