@@ -6,11 +6,11 @@ object Releases {
 }
 
 object Config {
-    val minSdk = 21
-    val compileSdk = 30
-    val targetSdk = 30
+    const val minSdk = 21
+    const val compileSdk = 30
+    const val targetSdk = 29
     val javaVersion = JavaVersion.VERSION_1_8
-    val buildTools = "29.0.2"
+    const val buildTools = "29.0.2"
 }
 
 
@@ -41,6 +41,7 @@ object Versions {
     const val toothpick = "3.1.0"
 
     const val junit = "4.13.1"
+    const val roboElectric = "4.4"
     const val junitExt = "1.1.2"
     const val espresso = "3.3.0"
 }
@@ -103,6 +104,7 @@ object OkHttpDeps {
 object AndroidTestDeps {
     const val junitExt = "androidx.test.ext:junit:${Versions.junitExt}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val roboElectric = "org.robolectric:robolectric:${Versions.roboElectric}"
 }
 
 object GlideDeps {

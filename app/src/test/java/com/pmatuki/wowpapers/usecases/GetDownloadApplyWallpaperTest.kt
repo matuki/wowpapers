@@ -1,9 +1,6 @@
 package com.pmatuki.wowpapers.usecases
 
-import com.pmatuki.wowpapers.data.WallpapersRepositoryImpl
-import com.pmatuki.wowpapers.fake.WallpaperApplierFake
-import com.pmatuki.wowpapers.fake.WallpaperDownloaderFake
-import com.pmatuki.wowpapers.fake.WallpaperListSourceFake
+import com.pmatuki.wowpapers.fake.*
 import com.pmatuki.wowpapers.usecases.apply.ApplyWallpaper
 import com.pmatuki.wowpapers.usecases.apply.WallpaperApplyResult
 import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
@@ -20,7 +17,7 @@ class GetDownloadApplyWallpaperTest {
 
     private val wallpaperListSourceFake = WallpaperListSourceFake(GetWallpapersTest.WALLPAPER_COUNT)
 
-    private val getWallpapers = GetWallpapers(WallpapersRepositoryImpl(wallpaperListSourceFake))
+    private val getWallpapers = GetWallpapers(WallpaperRepositoryFake(wallpaperListSourceFake))
 
     private val downloadWallpaper = DownloadWallpaper(WallpaperDownloaderFake())
 
@@ -50,10 +47,11 @@ class GetDownloadApplyWallpaperTest {
         Assert.assertTrue(wallpaperList.count() == GetWallpapersTest.WALLPAPER_COUNT)
 
         // Download with error
-        val downloadWallpaperWithError = DownloadWallpaper(WallpaperDownloaderFake().apply { doError() })
+        val downloaderFake = WallpaperDownloaderFake().apply { state = FakeState.ThrowError }
+        val downloadWallpaperWithError = DownloadWallpaper(downloaderFake)
+
         val downloadResult = downloadWallpaperWithError(wallpaperList[5].url)
         Assert.assertTrue(downloadResult is DownloadResult.Error)
-        Assert.assertEquals((downloadResult as DownloadResult.Error).message, "Error downloading")
     }
 
     @Test
@@ -63,7 +61,7 @@ class GetDownloadApplyWallpaperTest {
         Assert.assertTrue(wallpaperList.count() == GetWallpapersTest.WALLPAPER_COUNT)
 
         // Download
-        val downloadResult = downloadWallpaper(wallpaperList[wallpaperList.size - 1].url)
+        val downloadResult = downloadWallpaper(wallpaperList[wallpaperList.lastIndex].url)
         Assert.assertTrue(downloadResult is DownloadResult.Success<*>)
         val downloadSuccess = (downloadResult as DownloadResult.Success<*>)
         Assert.assertNotNull(downloadSuccess.item)

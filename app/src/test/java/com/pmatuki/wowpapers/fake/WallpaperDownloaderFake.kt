@@ -3,15 +3,12 @@ package com.pmatuki.wowpapers.fake
 import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
 import com.pmatuki.wowpapers.usecases.download.DownloadResult
 import com.pmatuki.wowpapers.usecases.download.WallpaperDownloader
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.withContext
 
 class WallpaperDownloaderFake : WallpaperDownloader {
 
-    private var state: FakeState = FakeState.Normal
+    var state: FakeState = FakeState.Normal
 
     @ExperimentalCoroutinesApi
     override suspend fun performDownload(url: String): DownloadResult {
@@ -30,9 +27,5 @@ class WallpaperDownloaderFake : WallpaperDownloader {
                 DownloadResult.Error("Unexpected error")
             }
         }
-    }
-
-    fun doError() {
-        state = FakeState.ThrowError
     }
 }
