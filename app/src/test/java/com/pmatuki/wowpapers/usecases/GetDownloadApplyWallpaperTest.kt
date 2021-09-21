@@ -1,10 +1,6 @@
 package com.pmatuki.wowpapers.usecases
 
-import com.pmatuki.wowpapers.data.WallpapersRepositoryImpl
-import com.pmatuki.wowpapers.fake.FakeState
-import com.pmatuki.wowpapers.fake.WallpaperApplierFake
-import com.pmatuki.wowpapers.fake.WallpaperDownloaderFake
-import com.pmatuki.wowpapers.fake.WallpaperListSourceFake
+import com.pmatuki.wowpapers.fake.*
 import com.pmatuki.wowpapers.usecases.apply.ApplyWallpaper
 import com.pmatuki.wowpapers.usecases.apply.WallpaperApplyResult
 import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
@@ -21,7 +17,7 @@ class GetDownloadApplyWallpaperTest {
 
     private val wallpaperListSourceFake = WallpaperListSourceFake(GetWallpapersTest.WALLPAPER_COUNT)
 
-    private val getWallpapers = GetWallpapers(WallpapersRepositoryImpl(wallpaperListSourceFake))
+    private val getWallpapers = GetWallpapers(WallpaperRepositoryFake(wallpaperListSourceFake))
 
     private val downloadWallpaper = DownloadWallpaper(WallpaperDownloaderFake())
 

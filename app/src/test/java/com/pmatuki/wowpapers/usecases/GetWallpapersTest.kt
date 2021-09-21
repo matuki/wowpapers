@@ -1,7 +1,7 @@
 package com.pmatuki.wowpapers.usecases
 
-import com.pmatuki.wowpapers.data.WallpapersRepositoryImpl
 import com.pmatuki.wowpapers.fake.WallpaperListSourceFake
+import com.pmatuki.wowpapers.fake.WallpaperRepositoryFake
 import com.pmatuki.wowpapers.usecases.get.GetWallpapers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -14,7 +14,7 @@ class GetWallpapersTest {
 
     private val wallpaperListSourceFake = WallpaperListSourceFake(WALLPAPER_COUNT)
 
-    private val getWallpapers = GetWallpapers(WallpapersRepositoryImpl(wallpaperListSourceFake))
+    private val getWallpapers = GetWallpapers(WallpaperRepositoryFake(wallpaperListSourceFake))
 
     @Test
     fun `test if get wallpapers use case returns expected list`()  = runBlockingTest {

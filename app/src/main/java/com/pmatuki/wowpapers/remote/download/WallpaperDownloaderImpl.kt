@@ -3,19 +3,21 @@ package com.pmatuki.wowpapers.remote.download
 import android.content.Context
 import android.graphics.drawable.Drawable
 import com.bumptech.glide.Glide
-import com.pmatuki.wowpapers.usecases.download.DownloadResult
 import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
+import com.pmatuki.wowpapers.usecases.download.DownloadResult
 import com.pmatuki.wowpapers.usecases.download.WallpaperDownloader
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import toothpick.InjectConstructor
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-@InjectConstructor
-class WallpaperDownloaderImpl(private val context: Context) : WallpaperDownloader {
+class WallpaperDownloaderImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : WallpaperDownloader {
 
-    override suspend fun performDownload(url: String) : DownloadResult {
+    override suspend fun performDownload(url: String): DownloadResult {
         return withContext(Dispatchers.IO) {
             try {
                 val imageDrawable = Glide.with(context).load(url).submit()

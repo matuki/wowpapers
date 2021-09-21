@@ -2,11 +2,13 @@ apply plugin: 'com.android.application'
 apply from: "$rootDir/config/feature_dependencies.gradle"
 apply plugin: 'kotlin-parcelize'
 apply from: 'https://raw.githubusercontent.com/JakeWharton/SdkSearch/master/gradle/projectDependencyGraph.gradle'
+apply plugin: 'dagger.hilt.android.plugin'
 
 
 dependencies {
     implementation project(':data')
     implementation project(':usecases')
+    implementation 'com.google.dagger:hilt-android:2.38.1'
 
     kapt DataBindingDeps.compiler
 
@@ -18,7 +20,8 @@ dependencies {
     implementation AndroidXDeps.roomRuntime
     kapt AndroidXDeps.roomCompiler
 
-    // ViewModel
+    // Activity and ViewModel
+    implementation AndroidXDeps.activityKtx
     implementation AndroidXDeps.lifecycleViewModel
 
     // Lifecycle
@@ -45,10 +48,17 @@ dependencies {
     testImplementation AndroidTestDeps.roboElectric
     androidTestImplementation AndroidTestDeps.espresso
 
-    // Toothpick and KTP
-    implementation ToothpickDeps.ktp
-    kapt ToothpickDeps.compiler
-    implementation ToothpickDeps.smoothie
+    // Hilt - Dagger
+    implementation HiltDeps.hilt
+    kapt HiltDeps.kapt
+
+    // Hilt - Instrumented Tests
+    androidTestImplementation AndroidTestDeps.hiltAndroidTest
+    kaptAndroidTest HiltDeps.kapt
+
+    // Hilt - Unit Tests
+    testImplementation AndroidTestDeps.hiltAndroidTest
+    kaptTest HiltDeps.kapt
 }
 
 android {
@@ -71,4 +81,12 @@ android {
         exclude "META-INF/LGPL2.1"
         exclude("META-INF/*.kotlin_module")
     }
+}
+
+kapt {
+    correctErrorTypes true
+}
+
+hilt {
+    enableAggregatingTask = true
 }

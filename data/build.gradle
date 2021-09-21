@@ -20,8 +20,11 @@ dependencies {
     implementation GlideDeps.glide
     annotationProcessor GlideDeps.glideAnnotation
 
-    // Toothpick and KTP
-    implementation ToothpickDeps.ktp
-    kapt ToothpickDeps.compiler
-    implementation ToothpickDeps.smoothie
+    // Hilt - Dagger
+    implementation HiltDeps.hiltCore
+    kapt HiltDeps.kapt
+}
+
+kapt {
+    correctErrorTypes true
 }

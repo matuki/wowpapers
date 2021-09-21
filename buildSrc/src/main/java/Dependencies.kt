@@ -21,7 +21,8 @@ object Versions {
     const val databinding = "3.1.4"
 
     const val ktx = "1.3.2"
-    const val appCompat = "1.2.0"
+    const val activityKtx = "1.3.1"
+    const val appCompat = "1.3.1"
     const val lifecycle = "2.3.1"
     const val arch = "2.1.0"
     const val room="2.2.6"
@@ -38,12 +39,12 @@ object Versions {
 
     const val glide = "4.12.0"
 
-    const val toothpick = "3.1.0"
-
     const val junit = "4.13.1"
     const val roboElectric = "4.4"
     const val junitExt = "1.1.2"
     const val espresso = "3.3.0"
+
+    const val hilt = "2.38.1"
 }
 
 object Deps {
@@ -58,11 +59,13 @@ object Deps {
     val androidtest = AndroidTestDeps
     val glide = GlideDeps
     val databinding = DataBindingDeps
+    val hilt = HiltDeps
 }
 
 
 object AndroidXDeps {
     const val ktx = "androidx.core:core-ktx:${Versions.ktx}"
+    const val activityKtx = "androidx.activity:activity-ktx:${Versions.activityKtx}"
     const val kotlinExtensions = "androidx.core:core-ktx:${Versions.ktx}"
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
@@ -105,6 +108,7 @@ object AndroidTestDeps {
     const val junitExt = "androidx.test.ext:junit:${Versions.junitExt}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     const val roboElectric = "org.robolectric:robolectric:${Versions.roboElectric}"
+    const val hiltAndroidTest = "com.google.dagger:hilt-android-testing:${Versions.hilt}"
 }
 
 object GlideDeps {
@@ -112,13 +116,13 @@ object GlideDeps {
     const val glideAnnotation = "com.github.bumptech.glide:compiler:${Versions.glide}"
 }
 
-object ToothpickDeps {
-    const val ktp = "com.github.stephanenicolas.toothpick:ktp:${Versions.toothpick}"
-    const val compiler = "com.github.stephanenicolas.toothpick:toothpick-compiler:${Versions.toothpick}"
-    const val smoothie = "com.github.stephanenicolas.toothpick:smoothie-androidx:${Versions.toothpick}"
-}
-
 object GradleDeps {
     val buildGradle = "com.android.tools.build:gradle:${Versions.buildGradle}"
     val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+}
+
+object HiltDeps {
+    val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+    val hiltCore = "com.google.dagger:hilt-core:${Versions.hilt}"
+    val kapt = "com.google.dagger:hilt-compiler:${Versions.hilt}"
 }

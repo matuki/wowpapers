@@ -14,3 +14,7 @@ buildSrc/build
 .externalNativeBuild
 .cxx
 local.properties
+gradlew
+.idea/misc.xml
+.idea/gradle.xml
+.idea/compiler.xml

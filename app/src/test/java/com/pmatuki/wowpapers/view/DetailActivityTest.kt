@@ -3,7 +3,6 @@ package com.pmatuki.wowpapers.view
 import android.os.Looper
 import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.pmatuki.wowpapers.BuildConfig
 import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.view.detail.DetailActivity
 import org.junit.Before

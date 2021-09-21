@@ -3,20 +3,21 @@ package com.pmatuki.wowpapers.view.list
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.databinding.ActivityMainBinding
 import com.pmatuki.wowpapers.view.detail.DetailActivity
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WallpaperListActivity : AppCompatActivity(), WallpaperItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var viewModel: WallpaperListViewModel
-
+    private val viewModel: WallpaperListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +31,6 @@ class WallpaperListActivity : AppCompatActivity(), WallpaperItemClickListener {
     }
 
     private fun bindViewModel() {
-        viewModel = ViewModelProvider(this).get(WallpaperListViewModel::class.java)
-
         viewModel.state.observe(this, { state ->
             when (state) {
                 WallpaperListState.Loading -> {
