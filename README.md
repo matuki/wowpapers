@@ -6,7 +6,7 @@ The app enables user to list and apply smartphone-compatible wallpapers availabl
 
 List of libs and frameworks used so far:
 
-- Toothpick (DI)
+- Dagger + Hilt (DI)
 - Coroutines (Async)
 - Room DB
 - Retrofit
