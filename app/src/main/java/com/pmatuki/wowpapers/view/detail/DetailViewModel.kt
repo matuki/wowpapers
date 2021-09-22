@@ -6,16 +6,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pmatuki.wowpapers.usecases.download.DownloadResult
+import com.pmatuki.wowpapers.usecases.apply.ApplyWallpaper
 import com.pmatuki.wowpapers.usecases.apply.WallpaperApplyResult
 import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
-import com.pmatuki.wowpapers.usecases.apply.ApplyWallpaper
+import com.pmatuki.wowpapers.usecases.download.DownloadResult
 import com.pmatuki.wowpapers.usecases.download.DownloadWallpaper
-import com.pmatuki.wowpapers.view.di.DetailViewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-internal class DetailViewModel() : ViewModel() {
+@HiltViewModel
+internal class DetailViewModel @Inject constructor() : ViewModel() {
 
     @Inject
     lateinit var downloadWallpaper: DownloadWallpaper
@@ -28,10 +29,6 @@ internal class DetailViewModel() : ViewModel() {
 
     val state: LiveData<DetailViewState>
         get() = _state
-
-    init {
-        DetailViewModelScope.scope.inject(this)
-    }
 
     fun download(imageUrl: String) {
         viewModelScope.launch {

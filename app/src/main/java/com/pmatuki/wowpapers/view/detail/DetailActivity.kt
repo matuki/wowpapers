@@ -3,20 +3,22 @@ package com.pmatuki.wowpapers.view.detail
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.databinding.ActivityDetailBinding
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
 
     private lateinit var wallpaperDrawable: Drawable
 
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +36,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun bindViewModel() {
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-
         viewModel.state.observe(this, { state ->
             when (state) {
                 DetailViewState.Loading -> {

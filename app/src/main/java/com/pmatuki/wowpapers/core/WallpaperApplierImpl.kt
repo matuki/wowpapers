@@ -7,14 +7,15 @@ import androidx.core.graphics.drawable.toBitmap
 import com.pmatuki.wowpapers.usecases.apply.WallpaperApplier
 import com.pmatuki.wowpapers.usecases.apply.WallpaperApplyResult
 import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import toothpick.InjectConstructor
 import java.io.IOException
+import javax.inject.Inject
 
-@InjectConstructor
-class WallpaperApplierImpl(
-    private val context: Context) : WallpaperApplier<Drawable> {
+class WallpaperApplierImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : WallpaperApplier<Drawable> {
 
     override suspend fun applyWallpaper(itemHolder: WallpaperItemHolder<Drawable>): WallpaperApplyResult =
         withContext(Dispatchers.IO) {

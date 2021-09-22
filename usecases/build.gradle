@@ -10,9 +10,11 @@ java {
 }
 
 dependencies {
+    // Hilt - Dagger
+    implementation HiltDeps.hiltCore
+    kapt HiltDeps.kapt
+}
 
-    // Toothpick and KTP
-    implementation ToothpickDeps.ktp
-    kapt ToothpickDeps.compiler
-    implementation ToothpickDeps.smoothie
+kapt {
+    correctErrorTypes true
 }
