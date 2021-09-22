@@ -8,7 +8,6 @@ apply plugin: 'dagger.hilt.android.plugin'
 dependencies {
     implementation project(':data')
     implementation project(':usecases')
-    implementation 'com.google.dagger:hilt-android:2.38.1'
 
     kapt DataBindingDeps.compiler
 
