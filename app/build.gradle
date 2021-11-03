@@ -22,9 +22,7 @@ dependencies {
     // Activity and ViewModel
     implementation AndroidXDeps.activityKtx
     implementation AndroidXDeps.lifecycleViewModel
-
-    // Lifecycle
-    implementation AndroidXDeps.liveData
+    implementation AndroidXDeps.lifecycleRuntime
 
     // Retrofit
     implementation RetrofitDeps.retrofit

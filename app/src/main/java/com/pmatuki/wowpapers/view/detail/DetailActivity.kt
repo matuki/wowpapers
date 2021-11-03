@@ -5,11 +5,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.databinding.ActivityDetailBinding
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
@@ -36,52 +41,58 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun bindViewModel() {
-        viewModel.state.observe(this, { state ->
-            when (state) {
-                DetailViewState.Loading -> {
-                    binding.apply {
-                        layoutViewLoading.visibility = View.VISIBLE
-                        cardView.visibility = View.INVISIBLE
-                    }
-                }
-                DetailViewState.Empty -> {
-                    binding.apply {
-                        layoutViewLoading.visibility = View.GONE
-                        cardView.visibility = View.VISIBLE
-                    }
-                }
-                is DetailViewState.ErrorLoading -> {
-                    binding.apply {
-                        this@DetailActivity.showToast(R.string.image_load_fail)
-                        layoutViewLoading.visibility = View.GONE
-                        cardView.visibility = View.VISIBLE
-                    }
-                }
-                is DetailViewState.Loaded -> {
-                    binding.apply {
-                        layoutViewLoading.visibility = View.GONE
-                        cardView.visibility = View.VISIBLE
-                        applyButton.isEnabled = true
-                    }
-                    if (state.drawableHolder.item is Drawable) {
-                        wallpaperDrawable = state.drawableHolder.item as Drawable
-                        this@DetailActivity.binding.backgroundImage.setImageDrawable(wallpaperDrawable)
-                    }
-                }
-                DetailViewState.Applying -> {
-                    binding.applyButton.isEnabled = false
-                    this@DetailActivity.showToast(R.string.applying_wallpaper_wait)
-                }
-                DetailViewState.Applied -> {
-                    binding.applyButton.isEnabled = true
-                    this@DetailActivity.showToast(R.string.applying_wallpaper_success)
-                }
-                is DetailViewState.ErrorApplying -> {
-                    binding.applyButton.isEnabled = true
-                    this@DetailActivity.showToast(R.string.applying_wallpaper_error)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state -> handleState(state) }
+            }
+        }
+    }
+
+    private fun handleState(state: DetailViewState) {
+        when (state) {
+            DetailViewState.Loading -> {
+                binding.apply {
+                    layoutViewLoading.visibility = View.VISIBLE
+                    cardView.visibility = View.INVISIBLE
                 }
             }
-        })
+            DetailViewState.Empty -> {
+                binding.apply {
+                    layoutViewLoading.visibility = View.GONE
+                    cardView.visibility = View.VISIBLE
+                }
+            }
+            is DetailViewState.ErrorLoading -> {
+                binding.apply {
+                    this@DetailActivity.showToast(R.string.image_load_fail)
+                    layoutViewLoading.visibility = View.GONE
+                    cardView.visibility = View.VISIBLE
+                }
+            }
+            is DetailViewState.Loaded -> {
+                binding.apply {
+                    layoutViewLoading.visibility = View.GONE
+                    cardView.visibility = View.VISIBLE
+                    applyButton.isEnabled = true
+                }
+                if (state.drawableHolder.item is Drawable) {
+                    wallpaperDrawable = state.drawableHolder.item as Drawable
+                    this@DetailActivity.binding.backgroundImage.setImageDrawable(wallpaperDrawable)
+                }
+            }
+            DetailViewState.Applying -> {
+                binding.applyButton.isEnabled = false
+                this@DetailActivity.showToast(R.string.applying_wallpaper_wait)
+            }
+            DetailViewState.Applied -> {
+                binding.applyButton.isEnabled = true
+                this@DetailActivity.showToast(R.string.applying_wallpaper_success)
+            }
+            is DetailViewState.ErrorApplying -> {
+                binding.applyButton.isEnabled = true
+                this@DetailActivity.showToast(R.string.applying_wallpaper_error)
+            }
+        }
     }
 
     companion object {

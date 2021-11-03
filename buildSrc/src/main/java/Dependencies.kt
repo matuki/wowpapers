@@ -7,7 +7,7 @@ object Releases {
 
 object Config {
     const val minSdk = 21
-    const val compileSdk = 30
+    const val compileSdk = 31
     const val targetSdk = 29
     val javaVersion = JavaVersion.VERSION_1_8
     const val buildTools = "29.0.2"
@@ -23,7 +23,7 @@ object Versions {
     const val ktx = "1.3.2"
     const val activityKtx = "1.3.1"
     const val appCompat = "1.3.1"
-    const val lifecycle = "2.3.1"
+    const val lifecycle = "2.4.0"
     const val arch = "2.1.0"
     const val room="2.2.6"
 
@@ -70,7 +70,7 @@ object AndroidXDeps {
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
-    const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
+    const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val archTest = "androidx.arch.core:core-testing:${Versions.arch}"
     const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"

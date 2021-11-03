@@ -2,8 +2,6 @@ package com.pmatuki.wowpapers.view.detail
 
 import android.graphics.drawable.Drawable
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pmatuki.wowpapers.usecases.apply.ApplyWallpaper
@@ -12,6 +10,8 @@ import com.pmatuki.wowpapers.usecases.apply.WallpaperItemHolder
 import com.pmatuki.wowpapers.usecases.download.DownloadResult
 import com.pmatuki.wowpapers.usecases.download.DownloadWallpaper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,11 +24,10 @@ internal class DetailViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var applyWallpaper: ApplyWallpaper<Drawable>
 
-    private val _state: MutableLiveData<DetailViewState> =
-        MutableLiveData(DetailViewState.Loading)
+    private val _state: MutableStateFlow<DetailViewState> =
+        MutableStateFlow(DetailViewState.Loading)
 
-    val state: LiveData<DetailViewState>
-        get() = _state
+    val state: StateFlow<DetailViewState> = _state
 
     fun download(imageUrl: String) {
         viewModelScope.launch {

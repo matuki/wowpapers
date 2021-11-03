@@ -1,13 +1,13 @@
 package com.pmatuki.wowpapers.view.list
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pmatuki.wowpapers.usecases.get.GetWallpapers
 import com.pmatuki.wowpapers.view.mapper.WallpaperMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -21,11 +21,10 @@ internal class WallpaperListViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var wallpaperMapper: WallpaperMapper
 
-    private val _state: MutableLiveData<WallpaperListState> =
-        MutableLiveData(WallpaperListState.Loading)
+    private val _state: MutableStateFlow<WallpaperListState> =
+        MutableStateFlow(WallpaperListState.Loading)
 
-    val state: LiveData<WallpaperListState>
-        get() = _state
+    val state: StateFlow<WallpaperListState> = _state
 
     fun loadWallpapers() = viewModelScope.launch {
         try {
