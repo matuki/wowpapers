@@ -5,12 +5,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.databinding.ActivityMainBinding
 import com.pmatuki.wowpapers.view.detail.DetailActivity
 import com.pmatuki.wowpapers.view.extension.showToast
 import com.pmatuki.wowpapers.view.model.Wallpaper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WallpaperListActivity : AppCompatActivity(), WallpaperItemClickListener {
@@ -31,36 +36,44 @@ class WallpaperListActivity : AppCompatActivity(), WallpaperItemClickListener {
     }
 
     private fun bindViewModel() {
-        viewModel.state.observe(this, { state ->
-            when (state) {
-                WallpaperListState.Loading -> {
-                    binding.apply {
-                        layoutViewLoading.visibility = View.VISIBLE
-                        layoutViewEmpty.visibility = View.GONE
-                    }
-                }
-                WallpaperListState.Empty -> {
-                    binding.apply {
-                        layoutViewLoading.visibility = View.GONE
-                        layoutViewEmpty.visibility = View.VISIBLE
-                    }
-                }
-                WallpaperListState.Error -> {
-                    binding.apply {
-                        this@WallpaperListActivity.showToast(R.string.wallpaper_list_load_fail)
-                        layoutViewLoading.visibility = View.GONE
-                        layoutViewEmpty.visibility = View.VISIBLE
-                    }
-                }
-                is WallpaperListState.Loaded ->  {
-                    binding.apply {
-                        layoutViewLoading.visibility = View.GONE
-                        layoutViewEmpty.visibility = View.GONE
-                    }
-                    this@WallpaperListActivity.binding.listView.updateList(state.list)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    handleState(state)
                 }
             }
-        })
+        }
+    }
+
+    private fun handleState(state: WallpaperListState) {
+        when (state) {
+            WallpaperListState.Loading -> {
+                binding.apply {
+                    layoutViewLoading.visibility = View.VISIBLE
+                    layoutViewEmpty.visibility = View.GONE
+                }
+            }
+            WallpaperListState.Empty -> {
+                binding.apply {
+                    layoutViewLoading.visibility = View.GONE
+                    layoutViewEmpty.visibility = View.VISIBLE
+                }
+            }
+            WallpaperListState.Error -> {
+                binding.apply {
+                    this@WallpaperListActivity.showToast(R.string.wallpaper_list_load_fail)
+                    layoutViewLoading.visibility = View.GONE
+                    layoutViewEmpty.visibility = View.VISIBLE
+                }
+            }
+            is WallpaperListState.Loaded ->  {
+                binding.apply {
+                    layoutViewLoading.visibility = View.GONE
+                    layoutViewEmpty.visibility = View.GONE
+                }
+                this@WallpaperListActivity.binding.listView.updateList(state.list)
+            }
+        }
     }
 
     override fun onWallpaperItemClicked(wallpaper: Wallpaper) {
