@@ -16,10 +16,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.detail.DetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:exported="false"/>
         <activity
             android:name=".view.list.WallpaperListActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
