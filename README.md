@@ -6,6 +6,10 @@ The app enables user to list and apply smartphone-compatible wallpapers availabl
 
 List of libs and frameworks used so far:
 
+- Compose **(new)**
+- Accompanist **(new)**
+- Navigation **(new)**
+- Flow **(new)**
 - Dagger + Hilt (DI)
 - Coroutines (Async)
 - Room DB
@@ -18,12 +22,7 @@ Architecture Practices and Patterns the project aims to follow:
 - Modularization (a simple approach)
 - MVVM
 
-Upcoming planned additions:
-
-- Flow
-- Compose
-- RxJava
 <br/>
-<img align="center" width="360" height="800" src="https://user-images.githubusercontent.com/1024511/119061965-fa9be900-b9ab-11eb-8981-fbaf46a55c22.png">
+<img align="center" width="360" height="800" src="https://user-images.githubusercontent.com/1024511/151669442-d327077d-6aa3-4701-9a5c-63fb32dc4787.png">
 <br/>
-<img align="center" width="360" height="800" src="https://user-images.githubusercontent.com/1024511/119061970-fc65ac80-b9ab-11eb-9ca9-770c7b145f57.png">
+<img align="center" width="360" height="800" src="https://user-images.githubusercontent.com/1024511/151669451-77ad9352-c96d-4953-8546-ad5a09918f8a.png">
