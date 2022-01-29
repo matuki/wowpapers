@@ -13,6 +13,12 @@ dependencies {
     // Hilt - Dagger
     implementation HiltDeps.hiltCore
     kapt HiltDeps.kapt
+
+    // Coroutines
+    implementation CoroutinesDeps.core
+    implementation CoroutinesDeps.jvm
+    implementation CoroutinesDeps.test
+    implementation CoroutinesDeps.android
 }
 
 kapt {
