@@ -23,6 +23,7 @@ dependencies {
     implementation AndroidXDeps.activityKtx
     implementation AndroidXDeps.lifecycleViewModel
     implementation AndroidXDeps.lifecycleRuntime
+    implementation AndroidXDeps.lifecycleLivedata
 
     // Retrofit
     implementation RetrofitDeps.retrofit
@@ -56,6 +57,36 @@ dependencies {
     // Hilt - Unit Tests
     testImplementation AndroidTestDeps.hiltAndroidTest
     kaptTest HiltDeps.kapt
+
+    // Compose
+    // Integration with activities
+    implementation ComposeDeps.activity
+    // Compose Material Design
+    implementation ComposeDeps.material
+    // Animations
+    implementation ComposeDeps.animation
+    // Tooling support (Previews, etc.)
+    implementation ComposeDeps.uiTooling
+    // Integration with ViewModels
+    implementation ComposeDeps.lifecycleVm
+    // UI Tests
+    androidTestImplementation ComposeDeps.testJunit
+
+    // Navigation
+    implementation NavigationDeps.runtime
+    implementation NavigationDeps.hiltCompose
+    implementation NavigationDeps.compose
+
+    // Accompanist
+    implementation AccompanistDeps.drawablePainter
+    implementation AccompanistDeps.insets
+    implementation AccompanistDeps.systemUi
+
+    // Coil
+    implementation CoilDeps.coilCompose
+
+    // Timber
+    implementation TimberDeps.timber
 }
 
 android {
@@ -78,6 +109,11 @@ android {
         exclude "META-INF/LGPL2.1"
         exclude("META-INF/*.kotlin_module")
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildToolsVersion '30.0.3'
 }
 
 kapt {

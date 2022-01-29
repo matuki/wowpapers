@@ -2,12 +2,13 @@
 buildscript {
     ext.kotlin_version = Versions.kotlin
     ext.hilt_version = Versions.hilt
+    ext.gradle_version = Versions.buildGradle
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath "com.android.tools.build:gradle:$gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         // NOTE: Do not place your application dependencies here; they belong
@@ -41,6 +42,7 @@ subprojects {
                 }
                 kotlinOptions {
                     jvmTarget = JavaVersion.VERSION_1_8
+                    freeCompilerArgs = ['-Xuse-experimental=androidx.compose.ui.ExperimentalComposeUiApi']
                 }
             }
         }

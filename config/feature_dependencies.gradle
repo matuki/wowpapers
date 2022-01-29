@@ -4,11 +4,16 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 31
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 31
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
+        compose true
         viewBinding true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion Versions.compose
+        kotlinCompilerVersion Versions.kotlin
     }
 }

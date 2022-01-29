@@ -15,13 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.detail.DetailActivity"
+            android:name=".view.MainActivity"
             android:screenOrientation="portrait"
-            android:exported="false"/>
-        <activity
-            android:name=".view.list.WallpaperListActivity"
-            android:screenOrientation="portrait"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
