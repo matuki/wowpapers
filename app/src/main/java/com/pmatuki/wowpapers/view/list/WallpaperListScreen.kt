@@ -1,6 +1,5 @@
 package com.pmatuki.wowpapers.view.list
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -76,28 +75,6 @@ internal fun WallpaperListScreen(
             onItemClicked(wallpaperObj.pathUrl.toString())
         }
     }
-
-//    when (state) {
-//        WallpaperListState.Loading -> {
-//            ProgressBar()
-//        }
-//        WallpaperListState.Empty -> {
-//            EmptyListText()
-//        }
-//        WallpaperListState.Error -> {
-//            ErrorToast(
-//                errorMessageResId = R.string.wallpaper_list_load_fail,
-//                snackBarState = scaffoldState.snackbarHostState
-//            )
-//        }
-//        is WallpaperListState.Loaded -> {
-//            val wallpaperList = (state as WallpaperListState.Loaded).list
-//            WallpaperList(wallpaperList) { wallpaperId ->
-//                val wallpaperObj = wallpaperList.first() { it.id == wallpaperId }
-//                onItemClicked(wallpaperObj.pathUrl.toString())
-//            }
-//        }
-//    }
 }
 
 @Composable
