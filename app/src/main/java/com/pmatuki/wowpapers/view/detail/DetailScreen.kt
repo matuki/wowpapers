@@ -1,6 +1,7 @@
 package com.pmatuki.wowpapers.view.detail
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.WindowManager
 import androidx.compose.foundation.Image
@@ -32,12 +33,17 @@ import com.google.accompanist.insets.navigationBarsPadding
 import com.pmatuki.wowpapers.R
 import com.pmatuki.wowpapers.view.common.ErrorToast
 import com.pmatuki.wowpapers.view.common.ProgressBar
+import com.pmatuki.wowpapers.view.common.showError
+import com.pmatuki.wowpapers.view.navigation.WowpaperRoute
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 @Composable
 internal fun DetailScreen(
-    stateFlow: StateFlow<*>,
+    stateFlow: StateFlow<DetailViewState>,
+    eventFlow: Flow<DetailViewEvent>,
     wallpaperUrl: String,
     downloadWallpaper: (url: String) -> Unit,
     applyWallpaper:(drawable: Drawable) -> Unit
@@ -46,6 +52,7 @@ internal fun DetailScreen(
     val scaffoldState = rememberScaffoldState()
     val activity = LocalContext.current as Activity
     var wallpaperDrawable by remember { mutableStateOf<Drawable?>(null) }
+    val context = LocalContext.current
 
     SideEffect {
         activity.actionBar?.hide()
@@ -55,46 +62,25 @@ internal fun DetailScreen(
         downloadWallpaper(wallpaperUrl)
     }
 
-    when (state) {
-        DetailViewState.Loading -> {
-            ProgressBar()
+    LaunchedEffect(true) {
+        eventFlow.collect {
+            when (it) {
+                is DetailViewEvent.LoadWallpaperError -> showError(context, R.string.image_load_fail)
+                is DetailViewEvent.ApplyWallpaperOngoing -> showError(context, R.string.applying_wallpaper_wait)
+                is DetailViewEvent.ApplyWallpaperError -> showError(context, R.string.applying_wallpaper_error)
+                is DetailViewEvent.ApplyWallpaperSuccess -> showError(context, R.string.applying_wallpaper_success)
+            }
         }
-        DetailViewState.Empty -> {
-            // Show nothing
-        }
-        is DetailViewState.ErrorLoading -> {
-            DetailScreenBody(wallpaperImage = null, applyEnabled = false)
-            ErrorToast(
-                errorMessageResId = R.string.image_load_fail,
-                snackBarState = scaffoldState.snackbarHostState
-            )
-        }
-        is DetailViewState.Loaded -> {
-            val loadedState = (state as DetailViewState.Loaded)
-            wallpaperDrawable = loadedState.drawableHolder.item as Drawable
-            DetailScreenBody(wallpaperImage = wallpaperDrawable, applyEnabled = true, onApplyClicked = applyWallpaper)
-        }
-        DetailViewState.Applying -> {
-            ErrorToast(
-                errorMessageResId = R.string.applying_wallpaper_wait,
-                snackBarState = scaffoldState.snackbarHostState
-            )
-            DetailScreenBody(wallpaperImage = wallpaperDrawable, applyEnabled = false)
-        }
-        DetailViewState.Applied -> {
-            DetailScreenBody(wallpaperImage = wallpaperDrawable, applyEnabled = true, onApplyClicked = applyWallpaper)
-            ErrorToast(
-                errorMessageResId = R.string.applying_wallpaper_success,
-                snackBarState = scaffoldState.snackbarHostState
-            )
-        }
-        is DetailViewState.ErrorApplying -> {
-            DetailScreenBody(wallpaperImage = wallpaperDrawable, applyEnabled = true, onApplyClicked = applyWallpaper)
-            ErrorToast(
-                errorMessageResId = R.string.applying_wallpaper_error,
-                snackBarState = scaffoldState.snackbarHostState
-            )
-        }
+    }
+
+    if (state.loading) {
+        ProgressBar()
+    } else {
+        DetailScreenBody(
+            wallpaperImage = state.wallpaperItem?.item as Drawable?,
+            applyEnabled = state.applying.not(),
+            onApplyClicked = applyWallpaper
+        )
     }
 }
 

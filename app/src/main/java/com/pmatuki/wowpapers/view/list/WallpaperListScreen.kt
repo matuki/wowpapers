@@ -1,5 +1,6 @@
 package com.pmatuki.wowpapers.view.list
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,46 +34,70 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.pmatuki.wowpapers.R
-import com.pmatuki.wowpapers.view.common.ErrorToast
 import com.pmatuki.wowpapers.view.common.ProgressBar
+import com.pmatuki.wowpapers.view.common.showError
 import com.pmatuki.wowpapers.view.model.Wallpaper
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import timber.log.Timber
 import java.net.URL
 
 @Composable
 internal fun WallpaperListScreen(
-    stateFlow: StateFlow<*>,
+    stateFlow: StateFlow<WallpaperListState>,
+    eventFlow: Flow<WallpaperListEvent>,
     loadWallpapers: () -> Unit,
     onItemClicked: (wallpaperUrl: String) -> Unit
 ) {
     val state by stateFlow.collectAsState()
     val scaffoldState = rememberScaffoldState()
+    val context = LocalContext.current
+
+    LaunchedEffect(true) {
+        eventFlow.collect {
+            when (it) {
+                is WallpaperListEvent.LoadListError -> showError(context, R.string.wallpaper_list_load_fail)
+            }
+        }
+    }
 
     LaunchedEffect(true) {
         loadWallpapers()
     }
 
-    when (state) {
-        WallpaperListState.Loading -> {
-            ProgressBar()
-        }
-        WallpaperListState.Empty -> {
-            EmptyListText()
-        }
-        WallpaperListState.Error -> {
-            ErrorToast(
-                errorMessageResId = R.string.wallpaper_list_load_fail,
-                snackBarState = scaffoldState.snackbarHostState
-            )
-        }
-        is WallpaperListState.Loaded -> {
-            val wallpaperList = (state as WallpaperListState.Loaded).list
-            WallpaperList(wallpaperList) { wallpaperId ->
-                val wallpaperObj = wallpaperList.first() { it.id == wallpaperId }
-                onItemClicked(wallpaperObj.pathUrl.toString())
-            }
+    if (state.loading) {
+        Timber.d("mvi - state loading")
+        ProgressBar()
+    } else {
+        Timber.d("mvi - state loaded: ${state.wallpaperList}")
+        WallpaperList(state.wallpaperList) { wallpaperId ->
+            val wallpaperObj = state.wallpaperList.first { it.id == wallpaperId }
+            onItemClicked(wallpaperObj.pathUrl.toString())
         }
     }
+
+//    when (state) {
+//        WallpaperListState.Loading -> {
+//            ProgressBar()
+//        }
+//        WallpaperListState.Empty -> {
+//            EmptyListText()
+//        }
+//        WallpaperListState.Error -> {
+//            ErrorToast(
+//                errorMessageResId = R.string.wallpaper_list_load_fail,
+//                snackBarState = scaffoldState.snackbarHostState
+//            )
+//        }
+//        is WallpaperListState.Loaded -> {
+//            val wallpaperList = (state as WallpaperListState.Loaded).list
+//            WallpaperList(wallpaperList) { wallpaperId ->
+//                val wallpaperObj = wallpaperList.first() { it.id == wallpaperId }
+//                onItemClicked(wallpaperObj.pathUrl.toString())
+//            }
+//        }
+//    }
 }
 
 @Composable
@@ -101,7 +127,9 @@ private fun WallpaperList(
         )
     ) {
         item {
-            Row(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)) {
                 Text(
                     text = stringResource(id = R.string.wallpaper_list_title),
                     style = typography.h2
