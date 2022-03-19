@@ -1,6 +1,5 @@
 package com.pmatuki.wowpapers.view.mvi
 
-import com.pmatuki.wowpapers.view.list.WallpaperListViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.flow.Flow

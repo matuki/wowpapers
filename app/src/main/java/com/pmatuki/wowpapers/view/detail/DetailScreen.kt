@@ -1,9 +1,7 @@
 package com.pmatuki.wowpapers.view.detail
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.drawable.Drawable
-import android.view.WindowManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,14 +13,12 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -31,14 +27,12 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.accompanist.insets.navigationBarsPadding
 import com.pmatuki.wowpapers.R
-import com.pmatuki.wowpapers.view.common.ErrorToast
 import com.pmatuki.wowpapers.view.common.ProgressBar
 import com.pmatuki.wowpapers.view.common.showError
-import com.pmatuki.wowpapers.view.navigation.WowpaperRoute
+import com.pmatuki.wowpapers.view.extension.collectAsStateLifecycleAware
+import com.pmatuki.wowpapers.view.extension.collectLifecycleAware
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import timber.log.Timber
 
 @Composable
 internal fun DetailScreen(
@@ -48,7 +42,7 @@ internal fun DetailScreen(
     downloadWallpaper: (url: String) -> Unit,
     applyWallpaper:(drawable: Drawable) -> Unit
 ) {
-    val state by stateFlow.collectAsState()
+    val state by stateFlow.collectAsStateLifecycleAware()
     val scaffoldState = rememberScaffoldState()
     val activity = LocalContext.current as Activity
     var wallpaperDrawable by remember { mutableStateOf<Drawable?>(null) }
@@ -62,8 +56,8 @@ internal fun DetailScreen(
         downloadWallpaper(wallpaperUrl)
     }
 
-    LaunchedEffect(true) {
-        eventFlow.collect {
+//    LaunchedEffect(true) {
+        eventFlow.collectLifecycleAware {
             when (it) {
                 is DetailViewEvent.LoadWallpaperError -> showError(context, R.string.image_load_fail)
                 is DetailViewEvent.ApplyWallpaperOngoing -> showError(context, R.string.applying_wallpaper_wait)
@@ -71,7 +65,7 @@ internal fun DetailScreen(
                 is DetailViewEvent.ApplyWallpaperSuccess -> showError(context, R.string.applying_wallpaper_success)
             }
         }
-    }
+//    }
 
     if (state.loading) {
         ProgressBar()
@@ -108,7 +102,7 @@ private fun DetailScreenBody(
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 24.dp)
+                .padding(horizontal = 24.dp, vertical = 40.dp)
                 .navigationBarsPadding(),
             onClick = { if (wallpaperImage != null) onApplyClicked(wallpaperImage) },
             enabled = applyEnabled

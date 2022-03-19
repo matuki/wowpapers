@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/pmatu/projects/Wowpapers/app/src/main/res/drawable/ic_img_placeholder.xml" value="0.27982456140350875" />
+        <entry key="..\:/Users/pmatu/projects/Wowpapers/app/src/main/res/layout/activity_detail.xml" value="0.1" />
+        <entry key="..\:/Users/pmatu/projects/Wowpapers/app/src/main/res/layout/wallpaper_item.xml" value="0.1881578947368421" />
+        <entry key="..\:/Users/pmatu/projects/Wowpapers/app/src/main/res/layout/wallpaper_list.xml" value="0.3087719298245614" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.21041666666666667" />
       </map>
     </option>
