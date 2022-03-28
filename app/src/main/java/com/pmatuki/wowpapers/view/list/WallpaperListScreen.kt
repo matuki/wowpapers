@@ -15,15 +15,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,51 +31,43 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.pmatuki.wowpapers.R
-import com.pmatuki.wowpapers.view.common.ErrorToast
 import com.pmatuki.wowpapers.view.common.ProgressBar
+import com.pmatuki.wowpapers.view.common.showError
+import com.pmatuki.wowpapers.view.extension.collectAsStateLifecycleAware
+import com.pmatuki.wowpapers.view.extension.collectLifecycleAware
 import com.pmatuki.wowpapers.view.model.Wallpaper
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import java.net.URL
 
 @Composable
 internal fun WallpaperListScreen(
-    stateFlow: StateFlow<*>,
+    stateFlow: StateFlow<WallpaperListState>,
+    eventFlow: Flow<WallpaperListEvent>,
     loadWallpapers: () -> Unit,
     onItemClicked: (wallpaperUrl: String) -> Unit
 ) {
-    val state by stateFlow.collectAsState()
-    val scaffoldState = rememberScaffoldState()
+    val state by stateFlow.collectAsStateLifecycleAware()
+    val context = LocalContext.current
+
+    eventFlow.collectLifecycleAware {
+        when (it) {
+            is WallpaperListEvent.LoadListError -> showError(context, R.string.wallpaper_list_load_fail)
+        }
+    }
 
     LaunchedEffect(true) {
         loadWallpapers()
     }
 
-    when (state) {
-        WallpaperListState.Loading -> {
-            ProgressBar()
-        }
-        WallpaperListState.Empty -> {
-            EmptyListText()
-        }
-        WallpaperListState.Error -> {
-            ErrorToast(
-                errorMessageResId = R.string.wallpaper_list_load_fail,
-                snackBarState = scaffoldState.snackbarHostState
-            )
-        }
-        is WallpaperListState.Loaded -> {
-            val wallpaperList = (state as WallpaperListState.Loaded).list
-            WallpaperList(wallpaperList) { wallpaperId ->
-                val wallpaperObj = wallpaperList.first() { it.id == wallpaperId }
-                onItemClicked(wallpaperObj.pathUrl.toString())
-            }
+    if (state.loading) {
+        ProgressBar()
+    } else {
+        WallpaperList(state.wallpaperList) { wallpaperId ->
+            val wallpaperObj = state.wallpaperList.firstOrNull { it.id == wallpaperId }
+            wallpaperObj?.let { onItemClicked(it.pathUrl.toString()) }
         }
     }
-}
-
-@Composable
-private fun EmptyListText() {
-    Text(stringResource(R.string.wallpaper_list_empty))
 }
 
 @Composable
@@ -101,7 +92,9 @@ private fun WallpaperList(
         )
     ) {
         item {
-            Row(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)) {
                 Text(
                     text = stringResource(id = R.string.wallpaper_list_title),
                     style = typography.h2

@@ -1,17 +1,14 @@
 package com.pmatuki.wowpapers.view.list
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pmatuki.wowpapers.usecases.get.GetWallpapers
 import com.pmatuki.wowpapers.usecases.navigate.Navigator
 import com.pmatuki.wowpapers.view.mapper.WallpaperMapper
+import com.pmatuki.wowpapers.view.mvi.MviContainer
 import com.pmatuki.wowpapers.view.navigation.WowpaperRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
@@ -26,27 +23,23 @@ internal class WallpaperListViewModel @Inject constructor(
     @Inject
     lateinit var wallpaperMapper: WallpaperMapper
 
-    private val _state: MutableStateFlow<WallpaperListState> =
-        MutableStateFlow(WallpaperListState.Loading)
+    val container = MviContainer<WallpaperListState, WallpaperListEvent>(viewModelScope, WallpaperListState())
 
-    val state: StateFlow<WallpaperListState> = _state
-
-    fun loadWallpapers() = viewModelScope.launch {
+    fun loadWallpapers() = container.intent {
         try {
+            reduce { copy(loading = true) }
             val wallpaperList = getWallpapers()
-            Log.v(
-                "Retrofit",
-                "API wallpaperDataSource.getWallpapers() returned: $wallpaperList"
-            )
 
             if (wallpaperList.isNotEmpty()) {
                 val mappedItems = wallpaperList.map { item -> wallpaperMapper.toView(item) }
-                _state.value = WallpaperListState.Loaded(mappedItems)
+                reduce { copy(wallpaperList = mappedItems) }
             } else {
-                _state.value = WallpaperListState.Empty
+                sendEvent(WallpaperListEvent.LoadListError)
             }
         } catch (e: IOException) {
-            _state.value = WallpaperListState.Error
+            sendEvent(WallpaperListEvent.LoadListError)
+        } finally {
+            reduce { copy(loading = false) }
         }
     }
 

@@ -112,12 +112,13 @@ class MainActivity : AppCompatActivity() {
         ) {
             composable(WowpaperRoute.List.destination) {
                 val viewModel = hiltViewModel<WallpaperListViewModel>()
-                WallpaperListScreen(viewModel.state, viewModel::loadWallpapers, viewModel::onItemClicked)
+                WallpaperListScreen(viewModel.container.state, viewModel.container.event, viewModel::loadWallpapers, viewModel::onItemClicked)
             }
             composable(WowpaperRoute.Detail.destination) {
                 val viewModel = hiltViewModel<DetailViewModel>()
                 DetailScreen(
-                    viewModel.state,
+                    viewModel.container.state,
+                    viewModel.container.event,
                     it.arguments?.getString("wallpaper_url") ?: "",
                     viewModel::download,
                     viewModel::apply
