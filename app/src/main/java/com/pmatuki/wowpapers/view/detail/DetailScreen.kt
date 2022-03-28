@@ -56,16 +56,14 @@ internal fun DetailScreen(
         downloadWallpaper(wallpaperUrl)
     }
 
-//    LaunchedEffect(true) {
-        eventFlow.collectLifecycleAware {
-            when (it) {
-                is DetailViewEvent.LoadWallpaperError -> showError(context, R.string.image_load_fail)
-                is DetailViewEvent.ApplyWallpaperOngoing -> showError(context, R.string.applying_wallpaper_wait)
-                is DetailViewEvent.ApplyWallpaperError -> showError(context, R.string.applying_wallpaper_error)
-                is DetailViewEvent.ApplyWallpaperSuccess -> showError(context, R.string.applying_wallpaper_success)
-            }
+    eventFlow.collectLifecycleAware {
+        when (it) {
+            is DetailViewEvent.LoadWallpaperError -> showError(context, R.string.image_load_fail)
+            is DetailViewEvent.ApplyWallpaperOngoing -> showError(context, R.string.applying_wallpaper_wait)
+            is DetailViewEvent.ApplyWallpaperError -> showError(context, R.string.applying_wallpaper_error)
+            is DetailViewEvent.ApplyWallpaperSuccess -> showError(context, R.string.applying_wallpaper_success)
         }
-//    }
+    }
 
     if (state.loading) {
         ProgressBar()
